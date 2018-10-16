@@ -2,6 +2,7 @@ package yc.klm.booking.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import yc.klm.booking.domain.Airport;
 import yc.klm.booking.domain.Flight;
@@ -34,6 +35,21 @@ public class AirTrafficEndpoint {
         Iterable <Flight> flights = airTrafficService.getAllFlights();
         return Response.ok(flights).build();
     }
-
+    
+    @Path("airport/add")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addAirport(@RequestBody Airport airport){
+        airport = airTrafficService.addAirport(airport);
+        return Response.ok(airport).build();
+    }
+    
+    @Path("flight/add")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addAirport(@RequestBody Flight flight){
+        flight = airTrafficService.addFlight(flight);
+        return Response.ok(flight).build();
+    }
 
 }
