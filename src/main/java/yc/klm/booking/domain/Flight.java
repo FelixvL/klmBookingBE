@@ -20,4 +20,38 @@ public class Flight {
 	@ManyToOne
 	private Airport destination;
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public Airport getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(Airport origin) {
+		this.origin = origin;
+	}
+
+	public Airport getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Airport destination) {
+		this.destination = destination;
+	}
+	
+	
+
 }
