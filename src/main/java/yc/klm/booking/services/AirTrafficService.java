@@ -1,5 +1,7 @@
 package yc.klm.booking.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,5 +27,14 @@ public class AirTrafficService {
 	public Iterable<Flight> getAllFlights(){
 		return flightRepository.findAll();
 	}
-
+	
+	public Airport addAirport(Airport airport){
+		 airport = airportRepository.save(airport);
+		return airport;
+	}
+	
+	public Flight addFlight(Flight flight){
+		 flight = flightRepository.save(flight);
+		return flight;
+	}
 }

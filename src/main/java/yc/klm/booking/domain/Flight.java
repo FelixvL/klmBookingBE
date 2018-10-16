@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Flight {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	private int duration;
