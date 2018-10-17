@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import yc.klm.booking.domain.Airport;
 import yc.klm.booking.domain.Flight;
+import yc.klm.booking.domain.Passenger;
+import yc.klm.booking.domain.Plane;
 import yc.klm.booking.services.AirTrafficService;
 
 import javax.ws.rs.*;
@@ -35,6 +37,23 @@ public class AirTrafficEndpoint {
         Iterable <Flight> flights = airTrafficService.getAllFlights();
         return Response.ok(flights).build();
     }
+    
+    @Path("passengers")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listAllPassengers(){
+        Iterable <Passenger> passengers = airTrafficService.getAllPassengers();
+        return Response.ok(passengers).build();
+    }
+    
+    @Path("planes")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listAllPlanes(){
+        Iterable <Plane> planes = airTrafficService.getAllPlanes();
+        return Response.ok(planes).build();
+    }
+    
     
     @Path("airport/add")
     @POST
