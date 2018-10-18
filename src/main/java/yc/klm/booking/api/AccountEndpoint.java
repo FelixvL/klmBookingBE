@@ -21,7 +21,7 @@ public class AccountEndpoint {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(@RequestBody Account account) {
-        return Response.ok(this.accountService.save(account)).build()
+        return Response.ok(this.accountService.save(account)).build();
     }
 
     @GET
@@ -36,7 +36,7 @@ public class AccountEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listTrajects(@PathParam("id") long id) {
 
-        Optional<Account> optionalAccount = this.accountService.findById();
+        Optional<Account> optionalAccount = this.accountService.findById(id);
         if (optionalAccount.isPresent()) {
             return Response.ok(optionalAccount.get()).build();
         } else {
@@ -78,9 +78,11 @@ public class AccountEndpoint {
         // hence this check!
         if (optionalAccount.isPresent()) {
             this.accountService.deleteById(id);
+
+            return Response.noContent().build();
         } else {
+
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
 }
