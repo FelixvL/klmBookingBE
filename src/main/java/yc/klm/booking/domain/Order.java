@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity
+@Entity(name="bestelling")
 public class Order implements Serializable {
 
     @Id
