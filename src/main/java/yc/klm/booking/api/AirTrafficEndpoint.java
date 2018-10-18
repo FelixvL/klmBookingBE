@@ -2,17 +2,16 @@ package yc.klm.booking.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import yc.klm.booking.domain.Airport;
-import yc.klm.booking.domain.Flight;
-import yc.klm.booking.domain.Passenger;
-import yc.klm.booking.domain.Plane;
+import yc.klm.booking.domain.*;
 import yc.klm.booking.services.AirTrafficService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 
 @Path("airtraffic")
@@ -70,5 +69,30 @@ public class AirTrafficEndpoint {
         flight = airTrafficService.addFlight(flight);
         return Response.ok(flight).build();
     }
+
+    @Path("trajects")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listTrajects() {
+        return Response.ok(this.airTrafficService.getAllTrajects()).build();
+    }
+
+    @Path("trajects/add/departure/{departureId}/arrival/{arrivalId}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addTraject(@PathVariable("departureId") long departureId,
+                               @PathVariable("arrivalId") long arrivalId,
+                               @RequestBody Traject traject){
+
+        Optional<Airport> departureAirportOptional = this.airTrafficService.findAirportById(departureId);
+        if(departureAirportOptional.isPresent()) {
+
+        }
+
+        Traject newTraject = new Traject();
+
+
+    }
+
 
 }

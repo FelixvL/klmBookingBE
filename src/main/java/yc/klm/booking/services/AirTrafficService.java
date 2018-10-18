@@ -1,19 +1,12 @@
 package yc.klm.booking.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yc.klm.booking.domain.*;
+import yc.klm.booking.repositories.*;
 
-import yc.klm.booking.domain.Airport;
-import yc.klm.booking.domain.Flight;
-import yc.klm.booking.domain.Passenger;
-import yc.klm.booking.domain.Plane;
-import yc.klm.booking.repositories.AirportRepository;
-import yc.klm.booking.repositories.FlightRepository;
-import yc.klm.booking.repositories.PassengerRepository;
-import yc.klm.booking.repositories.PlaneRepository;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -29,6 +22,9 @@ public class AirTrafficService {
 	
 	@Autowired
 	private PlaneRepository planeRepository;
+
+	@Autowired
+	private TrajectRepository trajectRepository;
 	
 	public Iterable<Airport> getAllAirports(){
 		return airportRepository.findAll();
@@ -55,4 +51,13 @@ public class AirTrafficService {
 	public Iterable<Plane> getAllPlanes(){
 		return planeRepository.findAll();
 	}
+
+	public Iterable<Traject> getAllTrajects() {
+		return this.trajectRepository.findAll();
+	}
+
+	public Optional<Airport> findAirportById(long id) {
+		return this.airportRepository.findById(id);
+	}
+
 }
