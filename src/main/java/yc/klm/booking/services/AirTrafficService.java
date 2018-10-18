@@ -30,7 +30,7 @@ public class AirTrafficService {
 		return airportRepository.findAll();
 	}
 	
-	public Iterable<Flight> getAllFlights(){
+	public Iterable<Trip> getAllFlights(){
 		return flightRepository.findAll();
 	}
 	
@@ -39,9 +39,9 @@ public class AirTrafficService {
 		return airport;
 	}
 	
-	public Flight addFlight(Flight flight){
-		 flight = flightRepository.save(flight);
-		return flight;
+	public Trip addFlight(Trip trip){
+		 trip = flightRepository.save(trip);
+		return trip;
 	}
 	
 	public Iterable<Passenger> getAllPassengers(){

@@ -14,7 +14,7 @@ public class Order implements Serializable {
     private Account account;
 
 
-    private Flight flight;
+    private Trip trip;
 
 
 }

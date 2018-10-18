@@ -31,7 +31,7 @@ public class AirTrafficEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listAllFlights() {
-        Iterable<Flight> flights = airTrafficService.getAllFlights();
+        Iterable<Trip> flights = airTrafficService.getAllFlights();
         return Response.ok(flights).build();
     }
 
@@ -60,12 +60,12 @@ public class AirTrafficEndpoint {
         return Response.ok(airport).build();
     }
 
-    @Path("flight/add")
+    @Path("trip/add")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addAirport(@RequestBody Flight flight) {
-        flight = airTrafficService.addFlight(flight);
-        return Response.ok(flight).build();
+    public Response addAirport(@RequestBody Trip trip) {
+        trip = airTrafficService.addFlight(trip);
+        return Response.ok(trip).build();
     }
 
     @Path("trajects")

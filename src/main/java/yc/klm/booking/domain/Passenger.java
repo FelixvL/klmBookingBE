@@ -7,7 +7,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 
 @Entity
@@ -19,7 +18,7 @@ public class Passenger {
 	private String name;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Flight> flights;
+	private List<Trip> trips;
 
 	public long getId() {
 		return id;
@@ -37,12 +36,12 @@ public class Passenger {
 		this.name = name;
 	}
 
-	public List<Flight> getFlights() {
-		return flights;
+	public List<Trip> getTrips() {
+		return trips;
 	}
 
-	public void setFlights(List<Flight> flights) {
-		this.flights = flights;
+	public void setTrips(List<Trip> trips) {
+		this.trips = trips;
 	}
 	
 	
