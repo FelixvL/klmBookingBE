@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import yc.klm.booking.domain.*;
 import yc.klm.booking.services.AirTrafficService;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
@@ -24,48 +26,48 @@ public class AirTrafficEndpoint {
     @Path("airports")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllAirports(){
-        Iterable <Airport> airports = airTrafficService.getAllAirports();
+    public Response listAllAirports() {
+        Iterable<Airport> airports = airTrafficService.getAllAirports();
         return Response.ok(airports).build();
     }
 
     @Path("flights")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllFlights(){
-        Iterable <Flight> flights = airTrafficService.getAllFlights();
+    public Response listAllFlights() {
+        Iterable<Flight> flights = airTrafficService.getAllFlights();
         return Response.ok(flights).build();
     }
-    
+
     @Path("passengers")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllPassengers(){
-        Iterable <Passenger> passengers = airTrafficService.getAllPassengers();
+    public Response listAllPassengers() {
+        Iterable<Passenger> passengers = airTrafficService.getAllPassengers();
         return Response.ok(passengers).build();
     }
-    
+
     @Path("planes")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllPlanes(){
-        Iterable <Plane> planes = airTrafficService.getAllPlanes();
+    public Response listAllPlanes() {
+        Iterable<Plane> planes = airTrafficService.getAllPlanes();
         return Response.ok(planes).build();
     }
-    
-    
+
+
     @Path("airport/add")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addAirport(@RequestBody Airport airport){
+    public Response addAirport(@RequestBody Airport airport) {
         airport = airTrafficService.addAirport(airport);
         return Response.ok(airport).build();
     }
-    
+
     @Path("flight/add")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addAirport(@RequestBody Flight flight){
+    public Response addAirport(@RequestBody Flight flight) {
         flight = airTrafficService.addFlight(flight);
         return Response.ok(flight).build();
     }
@@ -82,17 +84,23 @@ public class AirTrafficEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addTraject(@PathVariable("departureId") long departureId,
                                @PathVariable("arrivalId") long arrivalId,
-                               @RequestBody Traject traject){
+                               @RequestBody Traject traject) { // should be TrajectModel or some
 
         Optional<Airport> departureAirportOptional = this.airTrafficService.findAirportById(departureId);
-        if(departureAirportOptional.isPresent()) {
+        if (departureAirportOptional.isPresent()) {
+            Optional<Airport> arrivalAirportOptional = this.airTrafficService.findAirportById(arrivalId);
+            if (arrivalAirportOptional.isPresent()) {
+                Traject newTraject = new Traject();
+                newTraject.setDepartureAirport(departureAirportOptional.get());
+                newTraject.setArrivalAirport(arrivalAirportOptional.get());
+                newTraject.setInactiveStartdate(traject.getInactiveStartdate());
+                newTraject.setInactiveEnddate(traject.getInactiveEnddate());
 
+                this.airTrafficService.save(newTraject);
+
+                return Response.ok(newTraject).build();
+            }
         }
-
-        Traject newTraject = new Traject();
-
-
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
-
-
 }

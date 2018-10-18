@@ -60,4 +60,7 @@ public class AirTrafficService {
 		return this.airportRepository.findById(id);
 	}
 
+	public Traject save(Traject traject) {
+		return trajectRepository.save(traject);
+	}
 }
