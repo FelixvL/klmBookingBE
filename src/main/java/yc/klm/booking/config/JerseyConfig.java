@@ -5,6 +5,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 import yc.klm.booking.api.AccountEndpoint;
 import yc.klm.booking.api.AirTrafficEndpoint;
+import yc.klm.booking.api.OrderEndpoint;
 
 import javax.ws.rs.ApplicationPath;
 
