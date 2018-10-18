@@ -2,15 +2,11 @@ package yc.klm.booking.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import yc.klm.booking.domain.*;
 import yc.klm.booking.services.AirTrafficService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
@@ -82,8 +78,9 @@ public class AirTrafficEndpoint {
     @Path("trajects/add/departure/{departureId}/arrival/{arrivalId}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addTraject(@PathVariable("departureId") long departureId,
-                               @PathVariable("arrivalId") long arrivalId,
+    @Consumes
+    public Response addTraject(@PathParam("departureId") long departureId,
+                               @PathParam("arrivalId") long arrivalId,
                                @RequestBody Traject traject) { // should be TrajectModel or some
 
         Optional<Airport> departureAirportOptional = this.airTrafficService.findAirportById(departureId);
