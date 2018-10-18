@@ -1,10 +1,8 @@
 package yc.klm.booking.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Trip {
@@ -19,6 +17,9 @@ public class Trip {
 	
 	@ManyToOne
 	private Airport destination;
+
+	@OneToMany(mappedBy = "trip")
+	private Set<Order> orders = new HashSet<>();
 
 	public long getId() {
 		return id;
@@ -50,6 +51,11 @@ public class Trip {
 
 	public void setDestination(Airport destination) {
 		this.destination = destination;
+	}
+
+	public void addOrder(Order o) {
+		this.orders.add(o);
+		o.setTrip(this);
 	}
 	
 	
