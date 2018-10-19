@@ -56,8 +56,9 @@ public class AirportEndpoint {
         if (optionalAirport.isPresent()) {
             Airport airport = optionalAirport.get();
             airport.setAbbreviation(input.getAbbreviation());// from input => airport
-
-            // rloman more here
+            airport.setCity(input.getCity());
+            airport.setCountryCode(input.getCountryCode());
+            airport.setName(input.getName());
 
             this.airportService.save(airport);
 

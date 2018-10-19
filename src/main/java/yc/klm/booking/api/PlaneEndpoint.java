@@ -21,7 +21,9 @@ public class PlaneEndpoint {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response create(@RequestBody Plane plane) {
+        plane.setId(0);
         return Response.ok(this.planeService.save(plane)).build();
     }
 
@@ -56,6 +58,9 @@ public class PlaneEndpoint {
             Plane plane = planeOptional.get();
             plane.setTrips(input.getTrips());
             plane.setBrand(input.getBrand());
+            plane.setName(input.getName());
+            plane.setModel(input.getModel());
+            plane.setCapacity(input.getCapacity());
 
             this.planeService.save(plane);
 

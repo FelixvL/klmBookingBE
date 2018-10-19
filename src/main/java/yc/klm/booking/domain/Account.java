@@ -30,7 +30,7 @@ public class Account implements Serializable {
     private String password; //???
     private String type;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "account")
     private Set<Order> orders = new HashSet<>();
 
     public long getId() {
