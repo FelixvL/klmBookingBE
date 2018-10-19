@@ -3,8 +3,8 @@ package yc.klm.booking.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-import yc.klm.booking.domain.Order;
-import yc.klm.booking.services.OrderService;
+import yc.klm.booking.domain.Airport;
+import yc.klm.booking.services.AirportService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -12,23 +12,25 @@ import javax.ws.rs.core.Response;
 import java.util.Optional;
 
 @Component
-@Path("orders")
-public class OrderEndpoint {
+@Path("airports")
+public class AirportEndpoint {
 
     @Autowired
-    private OrderService orderService;
+    private AirportService airportService;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(@RequestBody Order order) {
-        return Response.ok(this.orderService.save(order)).build();
+    public Response create(@RequestBody Airport airport) {
+        airport = this.airportService.save(airport);
+        return Response.ok(airport).build();
     }
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response list() {
-        Iterable<Order> orders = this.orderService.findAll();
-        return Response.ok(orders).build();
+        Iterable<Airport> airports = this.airportService.findAll();
+        return Response.ok(airports).build();
     }
 
     @Path("{id}")
@@ -36,9 +38,9 @@ public class OrderEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") long id) {
 
-        Optional<Order> optionalOrder = this.orderService.findById(id);
-        if (optionalOrder.isPresent()) {
-            return Response.ok(optionalOrder.get()).build();
+        Optional<Airport> optionalAirport = this.airportService.findById(id);
+        if (optionalAirport.isPresent()) {
+            return Response.ok(optionalAirport.get()).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -48,18 +50,18 @@ public class OrderEndpoint {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam("id") long id, @RequestBody Order input) {
+    public Response listTrajects(@PathParam("id") long id, @RequestBody Airport input) {
 
-        Optional<Order> optionalOrder = this.orderService.findById(id);
-        if (optionalOrder.isPresent()) {
-            Order order = optionalOrder.get();
-            order.setLuggage(input.getLuggage()); // from input => order
+        Optional<Airport> optionalAirport = this.airportService.findById(id);
+        if (optionalAirport.isPresent()) {
+            Airport airport = optionalAirport.get();
+            airport.setAbbreviation(input.getAbbreviation());// from input => airport
 
             // rloman more here
 
-            this.orderService.save(order);
+            this.airportService.save(airport);
 
-            return Response.ok(order).build();
+            return Response.ok(airport).build();
 
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -72,12 +74,12 @@ public class OrderEndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("id") long id) {
 
-        Optional<Order> optionalOrder = this.orderService.findById(id);
+        Optional<Airport> optionalAirport = this.airportService.findById(id);
 
         // NB: If id is not present the removing will fail in throwing an Exception since Spring Boot 2.0,
         // hence this check!
-        if (optionalOrder.isPresent()) {
-            this.orderService.deleteById(id);
+        if (optionalAirport.isPresent()) {
+            this.airportService.deleteById(id);
 
             return Response.noContent().build();
         } else {
@@ -85,4 +87,6 @@ public class OrderEndpoint {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+
+
 }

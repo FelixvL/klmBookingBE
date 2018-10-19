@@ -15,7 +15,7 @@ public class AirTrafficService {
 	private AirportRepository airportRepository;
 
 	@Autowired
-	private FlightRepository flightRepository;
+	private TripRepository tripRepository;
 
 	@Autowired
 	private PassengerRepository passengerRepository;
@@ -31,7 +31,7 @@ public class AirTrafficService {
 	}
 	
 	public Iterable<Trip> getAllFlights(){
-		return flightRepository.findAll();
+		return tripRepository.findAll();
 	}
 	
 	public Airport addAirport(Airport airport){
@@ -40,7 +40,7 @@ public class AirTrafficService {
 	}
 	
 	public Trip addFlight(Trip trip){
-		 trip = flightRepository.save(trip);
+		 trip = tripRepository.save(trip);
 		return trip;
 	}
 	

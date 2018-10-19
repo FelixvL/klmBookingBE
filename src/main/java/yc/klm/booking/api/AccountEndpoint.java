@@ -34,7 +34,7 @@ public class AccountEndpoint {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id) {
+    public Response get(@PathParam("id") long id) {
 
         Optional<Account> optionalAccount = this.accountService.findById(id);
         if (optionalAccount.isPresent()) {
@@ -48,7 +48,7 @@ public class AccountEndpoint {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id, @RequestBody Account input) {
+    public Response put(@PathParam("id") long id, @RequestBody Account input) {
 
         Optional<Account> optionalAccount = this.accountService.findById(id);
         if (optionalAccount.isPresent()) {

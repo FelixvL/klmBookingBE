@@ -3,8 +3,8 @@ package yc.klm.booking.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-import yc.klm.booking.domain.Order;
-import yc.klm.booking.services.OrderService;
+import yc.klm.booking.domain.Trip;
+import yc.klm.booking.services.TripService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -12,23 +12,26 @@ import javax.ws.rs.core.Response;
 import java.util.Optional;
 
 @Component
-@Path("orders")
-public class OrderEndpoint {
+@Path("trips")
+public class TripEndpoint {
 
     @Autowired
-    private OrderService orderService;
+    private TripService tripService;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(@RequestBody Order order) {
-        return Response.ok(this.orderService.save(order)).build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response create(@RequestBody Trip trip) {
+
+        return Response.ok(this.tripService.save(trip)).build();
     }
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response list() {
-        Iterable<Order> orders = this.orderService.findAll();
-        return Response.ok(orders).build();
+        Iterable<Trip> flights = tripService.findAll();
+        return Response.ok(flights).build();
     }
 
     @Path("{id}")
@@ -36,9 +39,9 @@ public class OrderEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") long id) {
 
-        Optional<Order> optionalOrder = this.orderService.findById(id);
-        if (optionalOrder.isPresent()) {
-            return Response.ok(optionalOrder.get()).build();
+        Optional<Trip> tripOptional = this.tripService.findById(id);
+        if (tripOptional.isPresent()) {
+            return Response.ok(tripOptional.get()).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -48,18 +51,18 @@ public class OrderEndpoint {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(@PathParam("id") long id, @RequestBody Order input) {
+    public Response put(@PathParam("id") long id, @RequestBody Trip input) {
 
-        Optional<Order> optionalOrder = this.orderService.findById(id);
-        if (optionalOrder.isPresent()) {
-            Order order = optionalOrder.get();
-            order.setLuggage(input.getLuggage()); // from input => order
+        Optional<Trip> tripOptional = this.tripService.findById(id);
+        if (tripOptional.isPresent()) {
+            Trip trip = tripOptional.get();
+            trip.setOrigin(input.getOrigin());
+            trip.setDestination(input.getDestination());
+            trip.setDuration(input.getDuration());
 
-            // rloman more here
+            this.tripService.save(trip);
 
-            this.orderService.save(order);
-
-            return Response.ok(order).build();
+            return Response.ok(trip).build();
 
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -72,12 +75,12 @@ public class OrderEndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("id") long id) {
 
-        Optional<Order> optionalOrder = this.orderService.findById(id);
+        Optional<Trip> tripOptional = this.tripService.findById(id);
 
         // NB: If id is not present the removing will fail in throwing an Exception since Spring Boot 2.0,
         // hence this check!
-        if (optionalOrder.isPresent()) {
-            this.orderService.deleteById(id);
+        if (tripOptional.isPresent()) {
+            this.tripService.deleteById(id);
 
             return Response.noContent().build();
         } else {
@@ -85,4 +88,6 @@ public class OrderEndpoint {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+
+
 }
