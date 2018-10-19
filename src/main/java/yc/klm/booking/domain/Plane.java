@@ -14,6 +14,10 @@ public class Plane {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
+	private String name;
+	private String model;
+	private int capacity;
 	
 	private String brand;
 	
@@ -43,7 +47,28 @@ public class Plane {
 	public void setTrips(List<Trip> trips) {
 		this.trips = trips;
 	}
-	
-	
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
 }

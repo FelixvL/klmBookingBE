@@ -1,5 +1,7 @@
 package yc.klm.booking.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,6 +21,7 @@ public class Order implements Serializable {
     private BigDecimal paidAmount;
 
     @ManyToOne
+    @JsonIgnoreProperties("orders")
     private Account account;
 
 

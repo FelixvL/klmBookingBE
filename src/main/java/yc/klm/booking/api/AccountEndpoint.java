@@ -54,8 +54,16 @@ public class AccountEndpoint {
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
             account.setCity(input.getCity());// from input => account
-
-            // rloman more here
+            account.setCountry(input.getCountry());
+            account.setEmail(input.getEmail());
+            account.setFirstName(input.getFirstName());
+            account.setLastName(input.getLastName());
+            account.setPassportNumber(input.getPassportNumber());
+            account.setPhoneNumber(input.getPhoneNumber());
+            account.setPostalCode(input.getPostalCode());
+            account.setStreet(input.getStreet());
+            account.setStreetNumber(input.getStreetNumber());
+            account.setType(input.getType());
 
             this.accountService.save(account);
 
