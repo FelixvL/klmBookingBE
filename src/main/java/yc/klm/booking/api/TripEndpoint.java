@@ -3,9 +3,7 @@ package yc.klm.booking.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-import yc.klm.booking.domain.Order;
 import yc.klm.booking.domain.Trip;
-import yc.klm.booking.services.AirTrafficService;
 import yc.klm.booking.services.TripService;
 
 import javax.ws.rs.*;
@@ -18,15 +16,12 @@ import java.util.Optional;
 public class TripEndpoint {
 
     @Autowired
-    private AirTrafficService airTrafficService;
-
-    @Autowired
     private TripService tripService;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addAirport(@RequestBody Trip trip) {
+    public Response create(@RequestBody Trip trip) {
 
         return Response.ok(this.tripService.save(trip)).build();
     }
@@ -42,7 +37,7 @@ public class TripEndpoint {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id) {
+    public Response get(@PathParam("id") long id) {
 
         Optional<Trip> tripOptional = this.tripService.findById(id);
         if (tripOptional.isPresent()) {
@@ -56,7 +51,7 @@ public class TripEndpoint {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id, @RequestBody Trip input) {
+    public Response put(@PathParam("id") long id, @RequestBody Trip input) {
 
         Optional<Trip> tripOptional = this.tripService.findById(id);
         if (tripOptional.isPresent()) {

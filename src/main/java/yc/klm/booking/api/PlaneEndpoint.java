@@ -3,7 +3,6 @@ package yc.klm.booking.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-import yc.klm.booking.domain.Order;
 import yc.klm.booking.domain.Plane;
 import yc.klm.booking.services.AirTrafficService;
 import yc.klm.booking.services.PlaneService;
@@ -18,9 +17,6 @@ import java.util.Optional;
 public class PlaneEndpoint {
 
     @Autowired
-    private AirTrafficService airTrafficService;
-
-    @Autowired
     private PlaneService planeService;
 
     @POST
@@ -31,7 +27,7 @@ public class PlaneEndpoint {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllPlanes() {
+    public Response list() {
         Iterable<Plane> planes =this.planeService.findAll();
         return Response.ok(planes).build();
     }
@@ -53,7 +49,7 @@ public class PlaneEndpoint {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id, @RequestBody Plane input) {
+    public Response update(@PathParam("id") long id, @RequestBody Plane input) {
 
         Optional<Plane> planeOptional = this.planeService.findById(id);
         if (planeOptional.isPresent()) {

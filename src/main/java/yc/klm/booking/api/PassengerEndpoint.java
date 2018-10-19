@@ -3,7 +3,6 @@ package yc.klm.booking.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-import yc.klm.booking.domain.Order;
 import yc.klm.booking.domain.Passenger;
 import yc.klm.booking.services.AirTrafficService;
 import yc.klm.booking.services.PassengerService;
@@ -18,9 +17,6 @@ import java.util.Optional;
 public class PassengerEndpoint {
 
     @Autowired
-    private AirTrafficService airTrafficService;
-
-    @Autowired
     private PassengerService passengerService;
 
     @POST
@@ -32,14 +28,14 @@ public class PassengerEndpoint {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listAllPassengers() {
-        Iterable<Passenger> passengers = airTrafficService.getAllPassengers();
+        Iterable<Passenger> passengers = this.passengerService.findAll();
         return Response.ok(passengers).build();
     }
 
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id) {
+    public Response get(@PathParam("id") long id) {
 
         Optional<Passenger> optionalPassenger = this.passengerService.findById(id);
         if (optionalPassenger.isPresent()) {
@@ -53,7 +49,7 @@ public class PassengerEndpoint {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id, @RequestBody Passenger input) {
+    public Response update(@PathParam("id") long id, @RequestBody Passenger input) {
 
         Optional<Passenger> passengerOptional = this.passengerService.findById(id);
         if (passengerOptional.isPresent()) {

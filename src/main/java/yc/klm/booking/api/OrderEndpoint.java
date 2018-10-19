@@ -34,7 +34,7 @@ public class OrderEndpoint {
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id) {
+    public Response get(@PathParam("id") long id) {
 
         Optional<Order> optionalOrder = this.orderService.findById(id);
         if (optionalOrder.isPresent()) {
@@ -48,7 +48,7 @@ public class OrderEndpoint {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id, @RequestBody Order input) {
+    public Response update(@PathParam("id") long id, @RequestBody Order input) {
 
         Optional<Order> optionalOrder = this.orderService.findById(id);
         if (optionalOrder.isPresent()) {
