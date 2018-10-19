@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import yc.klm.booking.domain.Airport;
-import yc.klm.booking.services.AirTrafficService;
 import yc.klm.booking.services.AirportService;
 
 import javax.ws.rs.*;
@@ -21,7 +20,7 @@ public class AirportEndpoint {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addAirport(@RequestBody Airport airport) {
+    public Response create(@RequestBody Airport airport) {
         airport = this.airportService.save(airport);
         return Response.ok(airport).build();
     }
