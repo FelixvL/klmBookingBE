@@ -54,9 +54,11 @@ public class OrderEndpoint {
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
             order.setLuggage(input.getLuggage()); // from input => order
-
-            // rloman more here
-
+            order.setOpenAmount(input.getOpenAmount());
+            order.setPaidAmount(input.getPaidAmount());
+            order.setSeatType(input.getSeatType());
+            order.setSeatNumber(input.getSeatNumber());
+            
             this.orderService.save(order);
 
             return Response.ok(order).build();
