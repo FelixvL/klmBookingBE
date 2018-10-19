@@ -29,7 +29,6 @@ public class PassengerEndpoint {
         return Response.ok(this.passengerService.save(passenger)).build();
     }
 
-    @Path("passengers")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listAllPassengers() {
