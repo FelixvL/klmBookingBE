@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Component
 @Path("trajects")
-public class TrajecEndpoint {
+public class TrajectEndpoint {
 
     @Autowired
     private AirTrafficService airTrafficService;

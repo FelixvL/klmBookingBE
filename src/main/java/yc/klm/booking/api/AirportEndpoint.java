@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import yc.klm.booking.domain.Airport;
+import yc.klm.booking.domain.Order;
 import yc.klm.booking.services.AirTrafficService;
+import yc.klm.booking.services.AirportService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Optional;
 
 @Component
 @Path("airports")
@@ -19,6 +19,16 @@ public class AirportEndpoint {
 
     @Autowired
     private AirTrafficService airTrafficService;
+
+    @Autowired
+    private AirportService airportService;
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addAirport(@RequestBody Airport airport) {
+        airport = airTrafficService.addAirport(airport);
+        return Response.ok(airport).build();
+    }
 
 
     @GET
@@ -28,10 +38,60 @@ public class AirportEndpoint {
         return Response.ok(airports).build();
     }
 
-    @POST
+    @Path("{id}")
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addAirport(@RequestBody Airport airport) {
-        airport = airTrafficService.addAirport(airport);
-        return Response.ok(airport).build();
+    public Response listTrajects(@PathParam("id") long id) {
+
+        Optional<Airport> optionalAirport = this.airTrafficService.findAirportById(id);
+        if (optionalAirport.isPresent()) {
+            return Response.ok(optionalAirport.get()).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
+
+    @Path("{id}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response listTrajects(@PathParam("id") long id, @RequestBody Airport input) {
+
+        Optional<Airport> optionalAirport = this.airportService.findById(id);
+        if (optionalAirport.isPresent()) {
+            Airport airport = optionalAirport.get();
+            airport.setAbbreviation(input.getAbbreviation());// from input => airport
+
+            // rloman more here
+
+            this.airportService.save(airport);
+
+            return Response.ok(airport).build();
+
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @Path("{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response delete(@PathParam("id") long id) {
+
+        Optional<Airport> optionalAirport = this.airportService.findById(id);
+
+        // NB: If id is not present the removing will fail in throwing an Exception since Spring Boot 2.0,
+        // hence this check!
+        if (optionalAirport.isPresent()) {
+            this.airportService.deleteById(id);
+
+            return Response.noContent().build();
+        } else {
+
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+
 }
