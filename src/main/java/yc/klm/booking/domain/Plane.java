@@ -18,7 +18,7 @@ public class Plane {
 	private String brand;
 	
 	@OneToMany(fetch = FetchType.EAGER)
-	private List<Flight> flights;
+	private List<Trip> trips;
 
 	public long getId() {
 		return id;
@@ -36,12 +36,12 @@ public class Plane {
 		this.brand = brand;
 	}
 
-	public List<Flight> getFlights() {
-		return flights;
+	public List<Trip> getTrips() {
+		return trips;
 	}
 
-	public void setFlights(List<Flight> flights) {
-		this.flights = flights;
+	public void setTrips(List<Trip> trips) {
+		this.trips = trips;
 	}
 	
 	
