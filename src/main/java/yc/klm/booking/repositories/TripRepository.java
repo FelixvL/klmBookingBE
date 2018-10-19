@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 import yc.klm.booking.domain.Trip;
 
 @Component
-public interface FlightRepository extends CrudRepository<Trip, Long> {
+public interface TripRepository extends CrudRepository<Trip, Long> {
 
 }
