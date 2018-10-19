@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import yc.klm.booking.domain.Airport;
-import yc.klm.booking.domain.Order;
 import yc.klm.booking.services.AirTrafficService;
 import yc.klm.booking.services.AirportService;
 
@@ -18,32 +17,29 @@ import java.util.Optional;
 public class AirportEndpoint {
 
     @Autowired
-    private AirTrafficService airTrafficService;
-
-    @Autowired
     private AirportService airportService;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addAirport(@RequestBody Airport airport) {
-        airport = airTrafficService.addAirport(airport);
+        airport = this.airportService.save(airport);
         return Response.ok(airport).build();
     }
 
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllAirports() {
-        Iterable<Airport> airports = airTrafficService.getAllAirports();
+    public Response list() {
+        Iterable<Airport> airports = this.airportService.findAll();
         return Response.ok(airports).build();
     }
 
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listTrajects(@PathParam("id") long id) {
+    public Response get(@PathParam("id") long id) {
 
-        Optional<Airport> optionalAirport = this.airTrafficService.findAirportById(id);
+        Optional<Airport> optionalAirport = this.airportService.findById(id);
         if (optionalAirport.isPresent()) {
             return Response.ok(optionalAirport.get()).build();
         } else {
