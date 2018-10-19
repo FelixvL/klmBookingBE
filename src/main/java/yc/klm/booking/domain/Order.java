@@ -25,7 +25,8 @@ public class Order implements Serializable {
     private Account account;
 
 
-    @ManyToOne
+    @JsonIgnoreProperties("orders")
+    @ManyToOne()
     private Trip trip;
 
     public Account getAccount() {

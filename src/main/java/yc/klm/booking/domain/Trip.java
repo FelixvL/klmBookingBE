@@ -18,7 +18,7 @@ public class Trip {
 	@ManyToOne
 	private Airport destination;
 
-	@OneToMany(mappedBy = "trip")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "trip")
 	private Set<Order> orders = new HashSet<>();
 
 	public long getId() {
