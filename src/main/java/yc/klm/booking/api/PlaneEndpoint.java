@@ -23,7 +23,6 @@ public class PlaneEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(@RequestBody Plane plane) {
-        plane.setId(0);
         return Response.ok(this.planeService.save(plane)).build();
     }
 
